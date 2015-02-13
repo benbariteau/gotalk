@@ -120,7 +120,9 @@ bariteau@yelp.com
 
 * Other resources
 
+- Go playground - [[http://play.golang.org]]
 - Official go intro - [[http://tour.golang.org]]
 - Getting started - [[http://golang.org/doc/install]]
 - Standard library reference - [[http://www.golang.org/pkg/]]
 - Effective go - [[http://golang.org/doc/effective_go.html]]
+- This presentation [[http://go-talks.appspot.com/github.com/firba1/gotalk/introduction-to-go.slide]]
