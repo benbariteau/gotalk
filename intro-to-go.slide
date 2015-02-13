@@ -1,253 +1,126 @@
-Introduction to go
-and its concurrency primatives
-17 Feb 2015
+Intro to go
 
 Ben Bariteau
 bariteau@yelp.com
 
-* What go has
+* Hello, space
 
-- concurrency
-- garbage collection
-- objects (after a fashion)
-- multiple return types
-- interfaces
-- first-class functions
-- runtime reflection
-
-
-* What go does not have
-
-- polymorphic inheritance
-- generic types
-- semicolons
-
-
-* Hello world
-
-.play hello_world.go
+.play these_are_the_voyages.go
 
 
 * Basics
 
+* Variables
 
-* Variable declaration
-
-all of these do the same thing
-
-    var foo int
-    var foo = 0
-    foo := 0
+.play vars.go
 
 
-* Other types
+* If
 
-strings
+.play if.go /START OMIT/,/END OMIT/
 
-    baz := "" // zero value
-    bam := "Big Data"
 
-bool
+* For
 
-    goIsCool := true
-    goSucks := false // zero value
-
-(u|)int(8|16|32|64)
-
-    i := 0 // defaults to int
-    var j int32 = 42
-    k := i + j // compile error, not the same type!
-
-    var m uint8 = 255
-    var n int8 = 255 // compile eror, int8 won't fit that value!
+.play for.go /START OMIT/,/END OMIT/
 
 
 * Functions
 
-simplest function, no parameters, returns nothing
-
-    func main()
-
-takes a string and a bool, returns an int
-
-    func frobinate(foo string, bar bool) int
-
-this func takes two strings and returns a int and a bool
-
-    func refrobinate(foo, bar string) (int, bool)
+.play funcs.go /START OMIT/,/END OMIT/
 
 
-* Slices and arrays
+* Function literals
 
-arrays have fixed length (like C or Java)
+.play func_literals.go /START OMIT/,/END OMIT/
 
-.play array_acess.go /START OMIT/,/END OMIT
+* Advanced types
 
-slices are kind of like python lists
+* Slices
 
-    // these have the same effect
-    slice := make([]string, 0)
-    var slice []string // an uninitalized slice acts like an empty slice
+.play crew_simple.go
 
-* Fun with slices
 
-slices have a length and a capacity (defined by the underlying array)
+* Range
 
-.play slice_len_cap.go /START OMIT/,/END OMIT/
+.play crew.go /START OMIT/,/END OMIT/
 
-slices can be assigned past their length, as long as there is capacity
 
-    bar := make([]string, 0, 10)
-    bar[9] = "Jean-Luc Picard"
+* Slice and dice
 
-built in append function allows for appending to a slice
-    
-    foo := make([]int, 0)
-    foo = append(foo, 47)
+.play captain_and_first_officer.go /START OMIT/,/END OMIT/
 
 
 * Maps
 
-unlike slices, maps must be created
+.play maps.go
 
-    tngEpisodes := make(map[string]int)
 
-they work a lot like defaultdicts in python
+* Fun with maps
 
-    tngEpisodes["Darmok"] = 102
-    i := tngEpisodes["Darmok"] // i now contains 102!
-    j := tngEpisodes["The Visitor"] // j now contains 0
+.play ranks.go /START OMIT/,/END OMIT/
 
-if you need to know if the key is in the map
 
-    k, ok := tngEpisodes["Encounter at Farpoint"]
+* Pointers
 
-* Advanced types
+.play pointers.go /START OMIT/,/END OMIT/
 
-* Type declarations
 
-    type myInt int
+* Pointers and scope
 
-    type thing episode {
-        title  string
-        number int
-    }
+.play pointer_scope.go /START OMIT/,/END OMIT/
 
-* Methods
 
-.play stringer.go
+* Structs and methods
+
+.play weapons.go /START OMIT/,/END OMIT/
+
+
+* Pointers to structs
+
+.play struct_pointers.go /START OMIT/,/END OMIT/
+
 
 * Interfaces
-    package fmt
-    
-    ...
 
-    type Stringer interface {
-        String() string
-    }
+.code weapons_intefaces.go /START OMIT/,/END OMIT/
 
-shortens the last example to
 
-    var i myInt = 47
-    fmt.Print(i)
+* Using interfaces
 
-* The error type
+.play weapons_intefaces.go /START2 OMIT/,/END2 OMIT/
 
-    type Error interface {
-        Error() string
-    }
-
-often the second return value of a function
-
-    func main() {
-        fd, err := io.Open("path/to/file") 
-        if err != nil {
-            fmt.Print(err) 
-            os.Exit(1)
-        }
-        // do something with the file
-    }
-
-* Control structures
-
-* The if statement
-
-    func compare(a, b int) int {
-        if a > b {
-            return 1
-        } else if a < b {
-            return -1
-        } else {
-            return 0
-        }
-    }
-
-optional initalization
-
-    if powerLevel := getPowerLevel(); powerLevel > 9000 {
-        fmt.Println("It's over 9000!!!!!")
-    }
-
-* Looping
-
-    for i := 0; i < len(slice); i++ {
-        frobinate(slice[i])
-    }
-
-conditional only
-    
-    finished := false
-    for !finished {
-        finished = doneYet() 
-    }
-
-infinite loop
-   
-    for {
-        // input loop
-    } 
-
-* Switch
-
-    switch a {
-    case 1:
-        fmt.Println("one") // no need to `break`!
-    case 2:
-        fmt.Println("two")
-    case 3: fallthrough
-    case 4:
-        fmt.Println("three or four")
-    default:
-        fmt.Println("not one, two, three, or four")
-    }
-
-switch with conditions
-   
-    switch a {
-    case a < 0:
-        fmt.Println("Negative!")
-    case a == 0:
-        fmt.Println("Zero!")
-    case a > 0:
-        fmt.Println("Positive!") 
-    } 
 
 * Concurrency
 
-* Deferring
+* Defer
 
-.play defer.go
+.play defer.go /START OMIT/,/END OMIT/
+
 
 * Goroutines
 
-.play goroutines.go
+.play goroutines.go /START OMIT/,/END OMIT/
+
 
 * Channels
 
-channels are typed
+.play channels.go /START OMIT/,/END OMIT/
 
-    ch := make(chan int)
 
-channels can be buffered
+* Close and range
 
-    ch := make(chan int, 10)
+.play chan_close_range.go /START OMIT/,/END OMIT/
+
+* Select
+
+.play select.go /START OMIT/,/END OMIT/
+
+* Questions?
+
+* Other resources
+
+- Official go intro - [[http://tour.golang.org]]
+- Getting started - [[http://golang.org/doc/install]]
+- Standard library reference - [[http://www.golang.org/pkg/]]
+- Effective go - [[http://golang.org/doc/effective_go.html]]
